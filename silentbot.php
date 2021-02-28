@@ -1,5 +1,6 @@
 <?php
 
+require 'config/cons_var.php';
 include __DIR__.'/vendor/autoload.php';
 
 use Discord\Discord;
