@@ -4,6 +4,12 @@ require dirname(__DIR__).'/vendor/autoload.php';
 require dirname(__DIR__).'/config/cons_var.php';
 
 use Discord\Discord;
+use SilentBot\Lib\Database;
+
+$test = new Database(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DBNAME);
+$result = $test->execute('select * from users');
+print_r($result);
+die();
 
 $discord = new Discord([
 	'token' => BOT_TOKEN
