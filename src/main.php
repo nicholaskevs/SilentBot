@@ -12,10 +12,16 @@ $discord = new Discord([
 ]);
 
 $discord->on('ready', function ($discord) {
-	echo "SilentBot is ready!", PHP_EOL;
-	
-	$myGuild = $discord->guilds->get('id', GUILD_ID);
 	$fwdList = Manager::loadFwdList();
+	$myGuild = $discord->guilds->get('id', GUILD_ID);
+	
+	if(!$myGuild) {
+		echo "Guild not found, check GUILD_ID", PHP_EOL;
+		echo "Exiting script...", PHP_EOL;
+		die();
+	}
+	
+	echo "SilentBot is ready!", PHP_EOL;
 	
 	$discord->on('message', function ($message, $discord) use ($myGuild, $fwdList) {
 		if($message->user_id != $discord->id) {
