@@ -1,0 +1,7 @@
+
+CREATE TABLE `forwards` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`from` VARCHAR(18) NOT NULL,
+	`to` VARCHAR(18) NOT NULL,
+	PRIMARY KEY (`id`)
+);

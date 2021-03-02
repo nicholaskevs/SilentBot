@@ -11,7 +11,6 @@ Class Manager
 		if(DB_USEDB) {
 			$conn = new Database();
 			$result = $conn->execute('select * from forwards');
-			$result = [];
 		} else {
 			$file = dirname(__DIR__, 2).FORWARD_PATH.FORWARD_FILE;
 			$list = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
