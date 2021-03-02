@@ -10,7 +10,7 @@ Class Database
 	protected $dbname;
 	protected $conn;
 	
-	public function __construct(string $host, string $username, string $password, string $dbname) {
+	public function __construct(string $host = DB_HOST, string $username = DB_USERNAME, string $password = DB_PASSWORD, string $dbname = DB_DBNAME) {
 		$this->host = $host;
 		$this->username = $username;
 		$this->password = $password;
