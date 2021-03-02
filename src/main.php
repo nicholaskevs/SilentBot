@@ -17,7 +17,6 @@ $discord->on('ready', function ($discord) {
 	$myGuild = $discord->guilds->get('id', GUILD_ID);
 	$fwdList = Manager::loadFwdList();
 	
-	// Listen for messages.
 	$discord->on('message', function ($message, $discord) use ($myGuild, $fwdList) {
 		if($message->user_id != $discord->id) {
 			$key = array_search($message->channel_id, array_column($fwdList, 'from'));
