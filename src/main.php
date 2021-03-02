@@ -19,13 +19,15 @@ $discord->on('ready', function ($discord) {
 	
 	// Listen for messages.
 	$discord->on('message', function ($message, $discord) use ($myGuild, $fwdList) {
-		$key = array_search($message->channel_id, array_column($fwdList, 'from'));
-		if($key !== false) {
-			$fwdChannel = $myGuild->channels->get('id', $fwdList[$key]['to']);
-			if($fwdChannel) {
-				$bodyText = "**{$message->channel->guild->name} #{$message->channel->name} @{$message->author->username}:**\n";
-				$bodyText .= ">>> {$message->content}";
-				$fwdChannel->sendMessage($bodyText)->done(function ($fwdMessage) {echo "{$fwdMessage->content}", PHP_EOL;});
+		if($message->user_id != $discord->id) {
+			$key = array_search($message->channel_id, array_column($fwdList, 'from'));
+			if($key !== false) {
+				$fwdChannel = $myGuild->channels->get('id', $fwdList[$key]['to']);
+				if($fwdChannel) {
+					$bodyText = "**{$message->channel->guild->name} #{$message->channel->name} @{$message->author->username}:**\n";
+					$bodyText .= ">>> {$message->content}";
+					$fwdChannel->sendMessage($bodyText)->done(function ($fwdMessage) {echo "{$fwdMessage->content}", PHP_EOL;});
+				}
 			}
 		}
 	});
