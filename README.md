@@ -1,5 +1,5 @@
 # SilentBot
-Simple Discord bot to forward chat from channel to channel
+Simple Discord bot to forward chat from channel to channel using chatter and listener instances
 
 # How to use
 ## Requirement
