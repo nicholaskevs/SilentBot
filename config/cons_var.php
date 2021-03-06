@@ -3,7 +3,8 @@
 require 'cons_env.php';
 
 define('BOT_NAME', 'SilentBot');
-define('BOT_TOKEN', ENV_BOT_TOKEN);
+define('BOT_TOKEN_CHATTER', ENV_BOT_TOKEN_CHATTER);
+define('BOT_TOKEN_LISTENER', ENV_BOT_TOKEN_LISTENER);
 
 define('FORWARD_FILE', 'forward.txt');
 define('FORWARD_PATH', '/config/');
