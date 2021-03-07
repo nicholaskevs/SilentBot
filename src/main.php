@@ -24,7 +24,7 @@ $chatter->on('ready', function ($chatter) {
 		echo 'Listener ready', PHP_EOL;
 		
 		$fwdList = Manager::loadFwdList();
-		$myGuild = $chatter->guilds->get('id', GUILD_ID);
+		$myGuild = $chatter->guilds->offsetGet(GUILD_ID);
 		
 		if(!$myGuild) {
 			echo "Guild not found, check GUILD_ID", PHP_EOL;
@@ -36,20 +36,26 @@ $chatter->on('ready', function ($chatter) {
 			if($message->user_id != $chatter->id) {
 				$key = array_search($message->channel_id, array_column($fwdList, 'from'));
 				if($key !== false) {
-					$fwdChannel = $myGuild->channels->get('id', $fwdList[$key]['to']);
+					$fwdChannel = $myGuild->channels->offsetGet($fwdList[$key]['to']);
 					if($fwdChannel) {
-						$embed = $chatter->factory(\Discord\Parts\Embed\Embed::class);
-						$embed->setAuthor($message->author->username, $message->author->getAvatarAttribute());
-						$embed->setTitle("{$message->channel->guild->name} #{$message->channel->name}");
-						$embed->setDescription($message->content);
-						
-						foreach($message->attachments as $attachment) {
-							if(str_contains($attachment->content_type, 'image')) {
-								$embed->setImage($attachment->url);
+						if($message->embeds->count() && !$message->content) {
+							foreach($message->embeds as $embed) {
+								$fwdChannel->sendMessage("**{$message->channel->guild->name} #{$message->channel->name} @{$message->author->username}:**", false, $embed);
 							}
+						} else {
+							$embed = $chatter->factory(\Discord\Parts\Embed\Embed::class);
+							$embed->setAuthor($message->author->username, $message->author->getAvatarAttribute());
+							$embed->setTitle("{$message->channel->guild->name} #{$message->channel->name}");
+							$embed->setDescription($message->content);
+							
+							foreach($message->attachments as $attachment) {
+								if(str_contains($attachment->content_type, 'image')) {
+									$embed->setImage($attachment->url);
+								}
+							}
+							
+							$fwdChannel->sendEmbed($embed);
 						}
-						
-						$fwdChannel->sendEmbed($embed);
 					}
 				}
 			}
