@@ -43,6 +43,12 @@ $chatter->on('ready', function ($chatter) {
 						$embed->setTitle("{$message->channel->guild->name} #{$message->channel->name}");
 						$embed->setDescription($message->content);
 						
+						foreach($message->attachments as $attachment) {
+							if(str_contains($attachment->content_type, 'image')) {
+								$embed->setImage($attachment->url);
+							}
+						}
+						
 						$fwdChannel->sendEmbed($embed);
 					}
 				}
