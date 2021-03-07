@@ -47,6 +47,7 @@ $chatter->on('ready', function ($chatter) {
 							$embed->setAuthor($message->author->username, $message->author->getAvatarAttribute());
 							$embed->setTitle("{$message->channel->guild->name} #{$message->channel->name}");
 							$embed->setDescription($message->content);
+							$embed->setColor(0);
 							
 							foreach($message->attachments as $attachment) {
 								if(str_contains($attachment->content_type, 'image')) {
