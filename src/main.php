@@ -38,9 +38,12 @@ $chatter->on('ready', function ($chatter) {
 				if($key !== false) {
 					$fwdChannel = $myGuild->channels->get('id', $fwdList[$key]['to']);
 					if($fwdChannel) {
-						$bodyText = "**{$message->channel->guild->name} #{$message->channel->name} @{$message->author->username}:**\n";
-						$bodyText .= ">>> {$message->content}";
-						$fwdChannel->sendMessage($bodyText)->done(function ($fwdMessage) {echo "{$fwdMessage->content}", PHP_EOL;});
+						$embed = $chatter->factory(\Discord\Parts\Embed\Embed::class);
+						$embed->setAuthor($message->author->username, $message->author->getAvatarAttribute());
+						$embed->setTitle("{$message->channel->guild->name} #{$message->channel->name}");
+						$embed->setDescription($message->content);
+						
+						$fwdChannel->sendEmbed($embed);
 					}
 				}
 			}
